@@ -41,14 +41,12 @@ class LightState {
 
   static StateUpdateResult haUpdate(JsonObject& root, LightState& lightState) {
     String state = root["state"];
-    // parse new led state 
     boolean newState = false;
     if (state.equals(ON_STATE)) {
       newState = true;
     } else if (!state.equals(OFF_STATE)) {
       return StateUpdateResult::ERROR;
     }
-    // change the new state, if required
     if (lightState.ledOn != newState) {
       lightState.ledOn = newState;
       return StateUpdateResult::CHANGED;
@@ -62,10 +60,16 @@ class LightStateService : public StatefulService<LightState> {
   CRGB leds[NUM_LEDS];
   LightStateService(AsyncWebServer* server,SecurityManager* securityManager);
   void begin();
+  void checkTimer();
 
  private:
   HttpEndpoint<LightState> _httpEndpoint;
   WebSocketTxRx<LightState> _webSocket;
+  const int onHour = 13;
+  const int onMinute = 0;
+  const int offHour = 22;
+  const int offMinute = 0;
+  int previousMinute = -1;
 
   void registerConfig();
   void onConfigUpdated();

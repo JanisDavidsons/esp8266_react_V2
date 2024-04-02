@@ -47,3 +47,25 @@ void LightStateService::registerConfig() {
   String payload;
   serializeJson(doc, payload);
 }
+
+
+void LightStateService::checkTimer() {
+  time_t now = time(nullptr);
+  tm* currentTime = localtime(&now);
+  int currentHour = currentTime->tm_hour;
+  int currentMinute = currentTime->tm_min;
+
+  if (currentMinute != previousMinute) {
+    previousMinute = currentMinute;
+
+    if (currentHour == onHour && currentMinute == onMinute) {
+      _state.ledOn = true;
+      onConfigUpdated();
+    }
+
+    if (currentHour == offHour && currentMinute == offMinute) {
+      _state.ledOn = false;
+      onConfigUpdated();
+    }
+  }
+}
