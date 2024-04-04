@@ -11,12 +11,14 @@ LightStateService lightStateService = LightStateService(&server, esp8266React.ge
 
 /* timed evenets */
 auto timer = timer_create_default();
+void every1000MsCallback();
 
 void setup() {
   Serial.begin(SERIAL_BAUD_RATE);
   esp8266React.begin();
   lightStateService.begin();
   server.begin();
+  every1000MsCallback();
 }
 
 void loop() {
