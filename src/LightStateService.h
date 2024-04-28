@@ -65,7 +65,7 @@ class LightStateService : public StatefulService<LightState> {
  private:
   HttpEndpoint<LightState> _httpEndpoint;
   WebSocketTxRx<LightState> _webSocket;
-  const int onHour = 13;
+  const int onHour = 15;
   const int onMinute = 0;
   const int offHour = 22;
   const int offMinute = 0;
