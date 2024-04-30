@@ -32,7 +32,37 @@ void every1000MsCallback()
       1000,
       [](void *) -> bool
       {
-        lightStateService.checkTimer();
+        time_t now = time(nullptr);
+        tm* currentTime = localtime(&now);
+        int currentHour = currentTime->tm_hour;
+        int currentMinute = currentTime->tm_min;
+
+        if (currentMinute != lightStateService.previousMinute) {
+          lightStateService.previousMinute = currentMinute;
+
+          if (currentHour == lightStateService.getOnHour() && currentMinute == lightStateService.getOnMinute()) {
+            lightStateService.update([&](LightState& state) {
+              if (state.ledOn) {
+                return StateUpdateResult::UNCHANGED;
+              }
+              state.ledOn = true;
+              return StateUpdateResult::CHANGED;
+            }, "timer");
+          }
+
+          if (currentHour == lightStateService.getOffHour() && currentMinute == lightStateService.getOffMinute()) {
+            if (currentHour == lightStateService.getOnHour() && currentMinute == lightStateService.getOnMinute()) {
+              lightStateService.update([&](LightState& state) {
+                if (!state.ledOn) {
+                  return StateUpdateResult::UNCHANGED;
+                }
+                state.ledOn = false;
+                return StateUpdateResult::CHANGED;
+              }, "timer");
+            }
+          }
+        }
+
         return true;
       });
 }

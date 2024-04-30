@@ -38,34 +38,18 @@ void LightStateService::onConfigUpdated() {
     FastLED.show();
 }
 
-void LightStateService::registerConfig() {
-  DynamicJsonDocument doc(256);
-
-  doc["schema"] = "json";
-  doc["brightness"] = false;
-
-  String payload;
-  serializeJson(doc, payload);
+int LightStateService::getOnHour() const {
+  return onHour;
 }
 
+int LightStateService::getOnMinute() const {
+  return onMinute;
+}
 
-void LightStateService::checkTimer() {
-  time_t now = time(nullptr);
-  tm* currentTime = localtime(&now);
-  int currentHour = currentTime->tm_hour;
-  int currentMinute = currentTime->tm_min;
+int LightStateService::getOffHour() const {
+  return offHour;
+}
 
-  if (currentMinute != previousMinute) {
-    previousMinute = currentMinute;
-
-    if (currentHour == onHour && currentMinute == onMinute) {
-      _state.ledOn = true;
-      onConfigUpdated();
-    }
-
-    if (currentHour == offHour && currentMinute == offMinute) {
-      _state.ledOn = false;
-      onConfigUpdated();
-    }
-  }
+int LightStateService::getOffMinute() const {
+  return offMinute;
 }
