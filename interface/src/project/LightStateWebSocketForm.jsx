@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { Switch } from '@mui/material';
 
 import { WEB_SOCKET_ROOT } from '../api/endpoints';
