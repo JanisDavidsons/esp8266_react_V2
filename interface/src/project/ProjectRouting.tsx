@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Navigate, Routes, Route } from 'react-router-dom';
 
-import DemoProject from './DemoProject';
+import AquariumController from './AquariumController';
 
 const ProjectRouting: FC = () => {
   return (
@@ -13,7 +13,7 @@ const ProjectRouting: FC = () => {
       {
         // Add your project page routes below.
       }
-      <Route path="demo/*" element={<DemoProject />} />
+      <Route path="demo/*" element={<AquariumController />} />
     </Routes>
   );
 };

@@ -10,6 +10,9 @@
 #define DATA_PIN D6   // D6
 #define LED_PIN 2
 #define DEFAULT_LED_STATE false
+#define DEFAULT_RED_VALUE 0
+#define DEFAULT_GREEN_VALUE 0
+#define DEFAULT_BLUE_VALUE 0
 #define OFF_STATE "OFF"
 #define ON_STATE "ON"
 #define LED_ON 0x0
@@ -20,13 +23,39 @@
 class LightState {
  public:
   bool ledOn;
+  uint8_t redValue;
+  uint8_t greenValue;
+  uint8_t blueValue;
 
   static void read(LightState& settings, JsonObject& root) {
     root["led_on"] = settings.ledOn;
+    root["led_value"] = settings.redValue;
   }
 
   static StateUpdateResult update(JsonObject& root, LightState& lightState) {
     boolean newState = root["led_on"] | DEFAULT_LED_STATE;
+    int red = root["red_value"] | DEFAULT_RED_VALUE;
+    int green = root["green_value"] | DEFAULT_GREEN_VALUE;
+    int blue = root["blue_value"] | DEFAULT_BLUE_VALUE;
+
+  if (red != lightState.redValue || green != lightState.greenValue || blue != lightState.blueValue) {
+      lightState.redValue = red;
+      lightState.greenValue = green;
+      lightState.blueValue = blue;
+
+      return StateUpdateResult::CHANGED;
+    }
+
+    if (lightState.ledOn != newState) {
+      if (lightState.ledOn) {
+        lightState.ledOn = newState;
+        return StateUpdateResult::CHANGED;
+      }
+      lightState.ledOn = newState;
+      return StateUpdateResult::CHANGED;
+    }
+    return StateUpdateResult::UNCHANGED;
+
     if (lightState.ledOn != newState) {
       lightState.ledOn = newState;
 

@@ -6,12 +6,12 @@ import { WEB_SOCKET_ROOT } from '../api/endpoints';
 import { BlockFormControlLabel, FormLoader, MessageBox, SectionContent } from '../components';
 import { updateValue, useWs } from '../utils';
 
-import { LightState } from './types';
+import RgbSlider from '../components/RgbSlider';
 
 export const LIGHT_SETTINGS_WEBSOCKET_URL = WEB_SOCKET_ROOT + "lightState";
 
-const LightStateWebSocketForm: FC = () => {
-  const { connected, updateData, data } = useWs<LightState>(LIGHT_SETTINGS_WEBSOCKET_URL);
+const LightStateWebSocketForm = () => {
+  const { connected, updateData, data } = useWs(LIGHT_SETTINGS_WEBSOCKET_URL);
 
   const updateFormValue = updateValue(updateData);
 
@@ -36,6 +36,10 @@ const LightStateWebSocketForm: FC = () => {
             />
           }
           label="LED State?"
+        />
+
+        <RgbSlider
+          data={data}
         />
       </>
     );
