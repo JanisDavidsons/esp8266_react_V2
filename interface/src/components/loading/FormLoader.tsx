@@ -14,7 +14,7 @@ interface FormLoaderProps {
 const FormLoader: FC<FormLoaderProps> = ({ errorMessage, onRetry, message = "Loading…" }) => {
   if (errorMessage) {
     return (
-      <MessageBox my={2} level="error" message={errorMessage} onRetry={onRetry}>
+      <MessageBox my={2} level="error" message={errorMessage}>
         {
           onRetry &&
           <Button startIcon={<RefreshIcon />} variant="contained" color="error" onClick={onRetry}>
