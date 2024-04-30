@@ -1,25 +1,33 @@
-import React from 'react';
-import { Box, Typography, useTheme } from '@mui/material';
+import React, { FC } from 'react';
+
+import { Box, BoxProps, SvgIconProps, Theme, Typography, useTheme } from '@mui/material';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
 import ErrorIcon from '@mui/icons-material/Error';
 
-const LEVEL_ICONS = {
+type MessageBoxLevel = 'warning' | 'success' | 'info' | 'error';
+
+export interface MessageBoxProps extends BoxProps {
+  level: MessageBoxLevel;
+  message: string;
+}
+
+const LEVEL_ICONS: { [type in MessageBoxLevel]: React.ComponentType<SvgIconProps> } = {
   success: CheckCircleOutlineOutlinedIcon,
   info: InfoOutlinedIcon,
   warning: ReportProblemOutlinedIcon,
   error: ErrorIcon
 };
 
-const LEVEL_BACKGROUNDS = {
-  success: (theme) => theme.palette.success.dark,
-  info: (theme) => theme.palette.info.main,
-  warning: (theme) => theme.palette.warning.dark,
-  error: (theme) => theme.palette.error.dark,
+const LEVEL_BACKGROUNDS: { [type in MessageBoxLevel]: (theme: Theme) => string } = {
+  success: (theme: Theme) => theme.palette.success.dark,
+  info: (theme: Theme) => theme.palette.info.main,
+  warning: (theme: Theme) => theme.palette.warning.dark,
+  error: (theme: Theme) => theme.palette.error.dark,
 };
 
-const MessageBox = ({ level, message, sx, children, ...rest }) => {
+const MessageBox: FC<MessageBoxProps> = ({ level, message, sx, children, ...rest }) => {
   const theme = useTheme();
   const Icon = LEVEL_ICONS[level];
   const backgroundColor = LEVEL_BACKGROUNDS[level](theme);
