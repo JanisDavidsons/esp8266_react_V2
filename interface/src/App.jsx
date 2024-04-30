@@ -1,4 +1,4 @@
-import React, { FC, RefObject } from 'react';
+import React from 'react';
 import { SnackbarProvider } from 'notistack';
 
 import { IconButton } from '@mui/material';
@@ -9,11 +9,11 @@ import { FeaturesLoader } from './contexts/features';
 import CustomTheme from './CustomTheme';
 import AppRouting from './AppRouting';
 
-const App: FC = () => {
-  const notistackRef: RefObject<any> = React.createRef();
+const App = () => {
+  const notistackRef = React.createRef();
 
-  const onClickDismiss = (key: string | number | undefined) => () => {
-    notistackRef.current.closeSnackbar(key);
+  const onClickDismiss = () => () => {
+    notistackRef.current.closeSnackbar();
   };
 
   return (

@@ -27,18 +27,18 @@ const LayoutMenu: FC = () => {
         </List>
       )}
       <List disablePadding component="nav">
-        <LayoutMenuItem icon={WifiIcon} label="WiFi Connection" to="/wifi" />
-        <LayoutMenuItem icon={SettingsInputAntennaIcon} label="Access Point" to="/ap" />
+        <LayoutMenuItem icon={WifiIcon} label="WiFi Connection" to="/wifi" disabled={false}/>
+        <LayoutMenuItem icon={SettingsInputAntennaIcon} label="Access Point" to="/ap" disabled={false}/>
         {features.ntp && (
-          <LayoutMenuItem icon={AccessTimeIcon} label="Network Time" to="/ntp" />
+          <LayoutMenuItem icon={AccessTimeIcon} label="Network Time" to="/ntp" disabled={false}/>
         )}
         {features.mqtt && (
-          <LayoutMenuItem icon={DeviceHubIcon} label="MQTT" to="/mqtt" />
+          <LayoutMenuItem icon={DeviceHubIcon} label="MQTT" to="/mqtt" disabled={false}/>
         )}
         {features.security && (
           <LayoutMenuItem icon={LockIcon} label="Security" to="/security" disabled={!authenticatedContext.me.admin} />
         )}
-        <LayoutMenuItem icon={SettingsIcon} label="System" to="/system" />
+        <LayoutMenuItem icon={SettingsIcon} label="System" to="/system" disabled={false}/>
       </List>
     </>
   );

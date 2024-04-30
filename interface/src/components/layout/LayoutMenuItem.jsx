@@ -1,18 +1,11 @@
-import React, { FC } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import { ListItem, ListItemButton, ListItemIcon, ListItemText, SvgIconProps } from "@mui/material";
+import { ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 
 import { routeMatches } from "../../utils";
 
-interface LayoutMenuItemProps {
-  icon: React.ComponentType<SvgIconProps>;
-  label: string;
-  to: string;
-  disabled?: boolean;
-}
-
-const LayoutMenuItem: FC<LayoutMenuItemProps> = ({ icon: Icon, label, to, disabled }) => {
+const LayoutMenuItem = ({ icon: Icon, label, to, disabled }) => {
   const { pathname } = useLocation();
 
   return (

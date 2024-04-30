@@ -25,7 +25,10 @@ LightStateService::LightStateService(AsyncWebServer* server,
 }
 
 void LightStateService::begin() {
-  _state.ledOn = DEFAULT_LED_STATE;
+  _state.ledOn      = DEFAULT_LED_STATE;
+  _state.redValue   = DEFAULT_RED_VALUE;
+  _state.greenValue = DEFAULT_GREEN_VALUE;
+  _state.blueValue  = DEFAULT_BLUE_VALUE;
   onConfigUpdated();
 }
 
