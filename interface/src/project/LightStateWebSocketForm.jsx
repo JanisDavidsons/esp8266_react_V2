@@ -13,6 +13,13 @@ const LightStateWebSocketForm = () => {
 
   const updateFormValue = updateValue(updateData);
 
+  const handleRgbSliderChange = (color, value) => {
+    updateData(prevState => ({
+      ...prevState,
+      [color]: value
+    }));
+  };
+
   const content = () => {
     if (!connected || !data) {
       return (<FormLoader message="Connecting to WebSocket…" />);
@@ -38,6 +45,7 @@ const LightStateWebSocketForm = () => {
 
         <RgbSlider
           data={data}
+          handleRgbSliderChange={handleRgbSliderChange}
         />
       </>
     );
